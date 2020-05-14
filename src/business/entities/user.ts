@@ -1,4 +1,5 @@
 import * as jwt from 'jsonwebtoken'
+import * as bcrypt from 'bcrypt'
 
 export default class User {
     constructor(

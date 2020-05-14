@@ -9,6 +9,7 @@ import deleteVideoEndpoint from './endpoints/videos/deleteVideoEndpoint'
 import getAllVideosEndpoint from './endpoints/videos/getAllVideosEndpoint'
 import getVideoByIdEndpoint from './endpoints/videos/getVideoByIdEndpoint'
 import getUserByIdEndpoint from './endpoints/users/getUserByIdEndpoint'
+import GUIEndpoint from './endpoints/GUI/GUIEndpoint'
 
 const app = express()
 const cors = require("cors")
@@ -28,5 +29,6 @@ app.post('/videos/upload', uploadVideoEndpoint)
 app.put('/videos/edit', editVideoEndpoint)
 app.delete('/videos/:videoId', deleteVideoEndpoint)
 
+app.get('/', GUIEndpoint)
 
 export default app
