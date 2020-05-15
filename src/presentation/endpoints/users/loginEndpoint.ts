@@ -9,7 +9,7 @@ async function loginEndpoint(req: Request, res: Response) {
         const uc = new LoginUC(db)
 
         const data = await uc.execute(
-            req.headers.Authorization as string,
+            req.headers.authorization as string,
             req.body.email,
             req.body.password
         )
