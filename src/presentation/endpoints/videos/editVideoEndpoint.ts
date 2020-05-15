@@ -5,17 +5,21 @@ import EditVideoUC from "../../../business/usecases/videos/editVideoUC";
 export default async function editVideoEndpoint(req: Request, res: Response) {
     try {
         const db = new VideoDB()
-        const uc  = new EditVideoUC(db)
-        
+        const uc = new EditVideoUC(db)
+
         await uc.execute({
-            token: req.headers.Authorization as string,
+            token: req.headers.authorization as string,
             videoId: req.body.videoId,
             newTitle: req.body.newTitle,
             newDescription: req.body.newDescription
         })
 
-        res.status(200).send("Vídeo atualizado")
+        res
+            .status(200)
+            .send({ message: "Vídeo atualizado" })
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }

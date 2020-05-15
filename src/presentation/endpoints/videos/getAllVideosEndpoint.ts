@@ -7,10 +7,14 @@ export default async function getAllVideosEndpoint(req: Request, res: Response) 
         const db = new VideoDB()
         const uc = new getAllVideosUC(db)
 
-        const data = await uc.execute(Number(req.query.page))
+        const data = await uc.execute(Number(req.query.page) || 1)
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send(data)
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }

@@ -7,6 +7,14 @@ export default class GetUserByIdUC {
 
         const user = await this.database.getUser(id)
 
-        return { user }
+        if (!user) throw new Error("Usuário não encontrado")
+
+        return {
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            birthDate: user.birth_data,
+            profilePicture: user.profile_picture
+        }
     }
 }

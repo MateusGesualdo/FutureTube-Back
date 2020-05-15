@@ -21,8 +21,8 @@ export default class UserDB extends MainDB implements UserGateway {
         }
     }
 
-    async getUser(idOrEmail:string){
-        try{
+    async getUser(idOrEmail: string) {
+        try {
             const query = await this.connection.raw(
                 `SELECT * FROM future_tube_users 
                 WHERE id = "${idOrEmail}"
@@ -30,14 +30,14 @@ export default class UserDB extends MainDB implements UserGateway {
             )
 
             return query[0][0]
-        } catch (err){
+        } catch (err) {
             throw new Error(err.sqlMessage)
         }
     }
 
 
-    async changePassword(userId: string, newPassword: string){
-        try{
+    async changePassword(userId: string, newPassword: string) {
+        try {
             await this.connection.raw(
                 `UPDATE future_tube_users 
                 SET password = "${newPassword}"
