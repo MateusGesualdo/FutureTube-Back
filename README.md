@@ -54,3 +54,7 @@
 
 1. Open your browser's *localhost* and test the endpoints using this project's own GUI. You'll find templates for all available requests, but feel free to send them via other softwares such as Postman.
 
+## Notes
+
+* When creating a new user, `birthDate` must be in format **YYYY-MM-DD**
+* On *Get User Uploads* endpoint, you can use either a valid token as `authorization` in the request headers or an existing ID as a query parameter.
