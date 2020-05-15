@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import SignupUC from "../../../business/usecases/users/signupUC";
 import UserDB from "../../../data/userDatabase";
 
-async function signupEndpoint(req:Request, res:Response){
-  
-    try{
+async function signupEndpoint(req: Request, res: Response) {
+
+    try {
         const db = new UserDB()
         const uc = new SignupUC(db)
 
@@ -16,9 +16,13 @@ async function signupEndpoint(req:Request, res:Response){
             profilePicture: req.body.profilePicture
         })
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send(data)
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }
 

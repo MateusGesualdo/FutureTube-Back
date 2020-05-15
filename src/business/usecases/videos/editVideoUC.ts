@@ -19,6 +19,8 @@ export default class EditVideoUC {
 
         const video = await this.database.getVideoById(input.videoId)
 
+        if (!video) throw new Error("Vídeo naõ encontrado")
+
         const userId = User.getTokenData(input.token).id
 
         if (video.user_id !== userId) {
@@ -27,7 +29,7 @@ export default class EditVideoUC {
 
         const newTitle = input.newTitle || video.title
         const newDescription = input.newDescription || video.description
-        
+
         await this.database.editVideo(
             input.videoId,
             newTitle,

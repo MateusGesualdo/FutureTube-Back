@@ -8,11 +8,15 @@ async function getUserByIdEndpoint(req: Request, res: Response) {
         const db = new UserDB()
         const uc = new GetUserByIdUC(db)
 
-        const data = await uc.execute(req.params.id)
+        const user = await uc.execute(req.params.id)
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send({user})
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }
 

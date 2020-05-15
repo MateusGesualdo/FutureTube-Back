@@ -8,12 +8,16 @@ export default async function getUserUploadsEndpoint(req: Request, res: Response
         const uc = new getUserUploadsUC(db)
 
         const data = await uc.execute({
-            token: req.headers.Authorization as string,
-            userId: req.query.user as string
+            token: req.headers.authorization as string,
+            userId: req.query.userId as string
         })
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send(data)
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }

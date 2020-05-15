@@ -19,40 +19,51 @@ export default class User {
     getProfilePicture = () => this.profilePicture
 
     static generateToken(id: string) {
-        const jwtKey = process.env.JWT_KEY as string
-        const token = jwt.sign(
-            { id },
-            jwtKey,
-            { expiresIn: "24h" }
-        )
-        return token
+        try {
+            const jwtKey = process.env.JWT_KEY as string
+            const token = jwt.sign(
+                { id },
+                jwtKey,
+                { expiresIn: "24h" }
+            )
+            return token
+        } catch(err){
+            throw new Error(err.message)
+        }
     }
 
     static getTokenData(token: string) {
-        const jwtKey = process.env.JWT_KEY as string
-        const tokenData = jwt.verify(token, jwtKey) as { id: string }
-
-        return tokenData
+        try {
+            const jwtKey = process.env.JWT_KEY as string
+            const tokenData = jwt.verify(token, jwtKey) as { id: string }
+    
+            return tokenData
+        } catch(err){
+            throw new Error("Falha na autenticação: "+err.message)
+        }
     }
 
-    static encryptPassword(password: string) {
+    static async encryptPassword(password: string) {
+        try {
+            const rounds = 10
+            const hashPassword = await bcrypt.hash(password, rounds)
 
-        const jwtKey = process.env.JWT_KEY as string
-        const token = jwt.sign(
-            { password },
-            jwtKey,
-            { expiresIn: "2400000000000000000000000000000h" }
-        )
-        return token
+            return hashPassword
+        } catch (err) {
+            throw new Error(err.message)
+        }
 
     }
 
-    static checkPassword(password: string, hashPassword: string) {
+    static async checkPassword(password: string, hashPassword: string) {
+        try {
+            const passwordIsCorrect = await bcrypt.compare(password, hashPassword)
 
-        const jwtKey = process.env.JWT_KEY as string
-        const tokenData = jwt.verify(hashPassword, jwtKey) as { password: string }
+            return passwordIsCorrect
 
-        return (tokenData.password === password)
+        } catch (err) {
+            throw new Error(err.message)
+        }
 
     }
 }

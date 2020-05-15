@@ -12,6 +12,8 @@ export default class DeleteVideoUC {
 
         const video = await this.database.getVideoById(videoId)
 
+        if(!video) throw new Error("Vídeo não encontrado")
+
         const userId = User.getTokenData(token).id
 
         if (video.user_id !== userId) {

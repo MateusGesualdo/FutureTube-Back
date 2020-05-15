@@ -2,9 +2,9 @@ import { Request, Response } from "express";
 import UserDB from "../../../data/userDatabase";
 import LoginUC from "../../../business/usecases/users/loginUC";
 
-async function loginEndpoint(req:Request, res:Response){
-  
-    try{
+async function loginEndpoint(req: Request, res: Response) {
+
+    try {
         const db = new UserDB()
         const uc = new LoginUC(db)
 
@@ -14,9 +14,13 @@ async function loginEndpoint(req:Request, res:Response){
             req.body.password
         )
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send(data)
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }
 

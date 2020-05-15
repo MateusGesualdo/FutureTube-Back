@@ -13,14 +13,18 @@ export default class LoginUC {
             
             user = await this.database.getUser(id)
 
+            if (!user) throw new Error("Usuário ou senha incorretos")
+
         } else {
             if (!email || !password) {
-                throw new Error("Dados insufucuentes")
+                throw new Error("Dados insuficientes")
             }
     
             user = await this.database.getUser(email)
-    
-            const passwordIsCorrect = User.checkPassword(password, user.password)
+            
+            if (!user) throw new Error("Usuário ou senha incorretos")
+            
+            const passwordIsCorrect = await User.checkPassword(password, user.password)
     
             if (!passwordIsCorrect) {            
                 throw new Error("Usuário ou senha incorretos")

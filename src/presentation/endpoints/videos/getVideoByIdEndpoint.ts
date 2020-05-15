@@ -7,10 +7,14 @@ export default async function getVideoByIdEndpoint(req: Request, res: Response) 
         const db = new VideoDB()
         const uc = new GetVideoByIdUC(db)
 
-        const data = await uc.execute(req.params.id)
+        const video = await uc.execute(req.params.id)
 
-        res.status(200).send(data)
+        res
+            .status(200)
+            .send({video})
     } catch (err) {
-        res.status(err.code || 400).send(err.message)
+        res
+            .status(err.code || 400)
+            .send({ message: err.message })
     }
 }
