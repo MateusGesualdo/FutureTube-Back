@@ -17,7 +17,7 @@ export default class LoginUC {
 
         } else {
             if (!email || !password) {
-                throw new Error("Dados insuficientes")
+                throw new Error("Dados insuficientes aqui")
             }
     
             user = await this.database.getUser(email)
